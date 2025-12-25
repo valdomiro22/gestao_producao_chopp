@@ -57,7 +57,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.label_nome),
+            text = stringResource(R.string.login),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
                 .padding(top = 50.dp, bottom = Dimens.EspacamentoXG)

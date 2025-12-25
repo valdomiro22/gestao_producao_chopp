@@ -59,6 +59,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.57.2")
     implementation(libs.androidx.compose.material3.lint)
     implementation(libs.androidx.compose.ui.text)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.runtime.ktx)
     kapt("com.google.dagger:hilt-android-compiler:2.57.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
@@ -76,8 +78,8 @@ dependencies {
     // Para asyncImage
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+    // Para permissões
     implementation("com.google.accompanist:accompanist-permissions:0.37.3")
-
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

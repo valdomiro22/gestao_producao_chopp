@@ -1,9 +1,11 @@
 package com.santos.valdomiro.gestaoproducaochopp.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.santos.valdomiro.gestaoproducaochopp.MainActivityViewModel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.alteraremail.AlterarEmailScreen
 import com.santos.valdomiro.gestaoproducaochopp.presentation.alterarsenha.AlterarSenhaScreen
 import com.santos.valdomiro.gestaoproducaochopp.presentation.cadastrarusuario.CadastrarUsuarioScreen
@@ -13,7 +15,11 @@ import com.santos.valdomiro.gestaoproducaochopp.presentation.login.LoginScreen
 import com.santos.valdomiro.gestaoproducaochopp.presentation.recuperarsenha.RecuperarSenhaScreen
 
 @Composable
-fun AppNavigation(navController: NavHostController, destino: String) {
+fun AppNavigation(
+    navController: NavHostController,
+    destino: String,
+    modifier: Modifier = Modifier
+) {
 
     NavHost(
         navController = navController,

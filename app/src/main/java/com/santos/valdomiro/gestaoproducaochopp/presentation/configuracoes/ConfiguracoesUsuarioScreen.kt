@@ -139,11 +139,6 @@ fun ConfiguracoesUsuarioScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(
-            "Configurações",
-            fontSize = 32.sp
-        )
 
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
