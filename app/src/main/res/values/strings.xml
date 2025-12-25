@@ -1,0 +1,50 @@
+<resources>
+    <!-- Geral -->
+    <string name="app_name">Gestao Producao Chopp</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="login">Login</string>
+    <string name="logar">Logar</string>
+    <string name="enviar">Enviar</string>
+
+    <!-- Label -->
+    <string name="laber_senha">Senha</string>
+    <string name="laber_confirmar_senha">Confirmar Senha</string>
+    <string name="label_nome">Nome</string>
+    <string name="label_sobrenome">Sobrenome</string>
+    <string name="label_email">Email</string>
+
+    <!-- Placeholder -->
+    <string name="placeholder_nome">Ex: João</string>
+    <string name="placeholder_email">Ex: joao.santos@test.com</string>
+    <string name="placeholder_senha">Ex: fiT%s32d</string>
+    <string name="placeholder_sobrenome">Ex: Santos</string>
+    <string name="placeholder_novo_email">Novo e-mail</string>
+    <string name="placeholder_nova_senha">Nova senha</string>
+    <string name="placeholder_senha_atual">Senha atual</string>
+    <string name="placeholder_confirmar_nova_senha">Confirme a nova senha</string>
+
+    <!-- Cadastro Screen -->
+    <string name="info_ja_tem_conta">Já possui uma conta?</string>
+
+    <!-- Alterar Email Screen -->
+    <string name="alterar_email">Alterar Email</string>
+
+    <!-- Alterar Senha Screen -->
+    <string name="alterar_senha">Alterar Senha</string>
+
+    <!-- Configuracoes Screen -->
+    <string name="excluir_conta">Excluir Conta</string>
+
+    <!-- Alterar Email Screen -->
+    <string name="guia_alterar_email">Digite o novo e-mail e a sua senha atual para confirmar</string>
+
+    <!-- Alterar Senha Screen -->
+    <string name="guia_alterar_senha">Digite a senha atual e a nova senha. A nova não deve ser igual a anterior</string>
+
+    <!-- Recuperar Senha Screen -->
+    <string name="recuperar_senha">Recuperar Senha</string>
+    <string name="guia_recuperar_senha">Insira o email cadastrado para receber o link de redefinição de senha.</string>
+</resources>
