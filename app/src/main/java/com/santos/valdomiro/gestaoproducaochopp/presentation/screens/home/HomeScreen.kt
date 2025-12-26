@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CardStatusProducao
+import com.santos.valdomiro.gestaoproducaochopp.presentation.components.SelecionarTurno
 import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
 import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
@@ -136,6 +137,10 @@ fun HomeScreen(
                 quantidade = "120"
             )
         }
+
+        Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
+
+        SelecionarTurno()
 
     }
 }
