@@ -19,7 +19,7 @@ sealed class Screen(
     object Splash : Screen("splash")
 
     // Telas que APARECEM no Drawer (possuem Título e Ícone)
-    object Home : Screen("home", "Início", Icons.Default.Home)
+    object Home : Screen("home", "Home", Icons.Default.Home)
     object Configuracoes : Screen("configuracoes", "Configurações", Icons.Default.Settings)
     object AlterarSenha : Screen("alterar-senha", "Alterar Senha", Icons.Default.Lock)
     object AlterarEmail : Screen("alterar-email", "Alterar Email", Icons.Default.Email)
