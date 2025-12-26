@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.home
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.drawer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class DrawerViewModel @Inject constructor(
     private val deslogarUseCase: DeslogarUseCase
 ) : ViewModel() {
 
@@ -32,5 +32,4 @@ class HomeViewModel @Inject constructor(
     fun resetState() {
         _uiState.value = UiState.Aguardando
     }
-
 }

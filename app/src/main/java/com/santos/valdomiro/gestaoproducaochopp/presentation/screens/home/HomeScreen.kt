@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.home
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.home
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -19,25 +19,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 
 @Composable
 fun HomeScreen(
-    irParaLogin: () -> Unit,
-    irParaConfiguracoes: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val navController = LocalNavController.current
 
     LaunchedEffect(state) {
         when (state) {
             is UiState.Success -> {
-                irParaLogin()
-                viewModel.resetState()
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(Screen.Home.route) { inclusive = true }
+                }
             }
             is UiState.Error -> {
                 Toast.makeText(context, "Erro ao tentar Deslogar", Toast.LENGTH_SHORT).show()
@@ -71,7 +73,9 @@ fun HomeScreen(
         Spacer(Modifier.height(100.dp))
 
         Button(
-            onClick = { irParaConfiguracoes() },
+            onClick = {
+                navController.navigate(Screen.Configuracoes.route)
+            },
             contentPadding = PaddingValues(horizontal = 40.dp, vertical = 15.dp),
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -87,6 +91,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     MaterialTheme {
-        HomeScreen({}, {})
+        HomeScreen()
     }
 }

@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.ads.mobile.sdk)
+    implementation(libs.androidx.compose.runtime)
     kapt("com.google.dagger:hilt-android-compiler:2.57.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
@@ -71,7 +74,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.6")
 
     // Para usar na viewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel-compose:1.3.0")
 
     implementation("androidx.core:core-splashscreen:1.2.0")
 

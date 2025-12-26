@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.recuperarsenha
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.recuperarsenha
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,20 +36,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.R
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomOutlinedTextField
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 
 @Composable
 fun RecuperarSenhaScreen(
-    irParaLogin: () -> Unit,
     viewModel: RecuperarSenhaViewModel = hiltViewModel()
 ) {
 
     var email by remember { mutableStateOf("") }
     val state by viewModel.uiState.collectAsState()
+    val navController = LocalNavController.current
 
     LaunchedEffect(state) {
         when (state) {
-            is UiState.Success -> { irParaLogin() }
+            is UiState.Success -> { navController.popBackStack() }
             is UiState.Error -> {}
             else -> {}
         }

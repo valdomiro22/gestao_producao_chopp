@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.login
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,22 +9,21 @@ import androidx.compose.ui.Alignment
 import com.santos.valdomiro.gestaoproducaochopp.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomOutlinedTextField
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomOutlinedTextFieldSenha
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomTextErro
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    irParaCadastro: () -> Unit,
-    irParaHome: () -> Unit,
-    irParaRecuperarSenha: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
@@ -34,6 +33,7 @@ fun LoginScreen(
     val state by viewModel.uiState.collectAsState()
 
     val context = LocalContext.current
+    val navController = LocalNavController.current
 
     val isFormValid = email.isNotBlank() &&
             android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
@@ -43,7 +43,9 @@ fun LoginScreen(
     LaunchedEffect(state) {
         when (state) {
             is UiState.Success -> {
-                irParaHome()
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Login.route) { inclusive = true }
+                }
             }
             is UiState.Error -> {}
             else -> {}
@@ -94,7 +96,9 @@ fun LoginScreen(
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .clickable { irParaRecuperarSenha() }
+                    .clickable {
+                        navController.navigate(Screen.RecuperarSenha.route)
+                    }
             )
         }
 
@@ -126,7 +130,9 @@ fun LoginScreen(
             Text(stringResource(R.string.info_ja_tem_conta))
 
             TextButton(
-                onClick = { irParaCadastro() }
+                onClick = {
+                    navController.navigate(Screen.Cadastro.route)
+                }
             ) {
                 Text(text = stringResource(R.string.cadastrar))
             }

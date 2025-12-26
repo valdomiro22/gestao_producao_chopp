@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.cadastrarusuario
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.cadastrarusuario
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

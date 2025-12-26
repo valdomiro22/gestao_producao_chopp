@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.configuracoes
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.configuracoes
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel

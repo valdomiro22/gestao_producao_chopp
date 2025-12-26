@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.cadastrarusuario
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.cadastrarusuario
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -43,13 +43,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.R
 import com.santos.valdomiro.gestaoproducaochopp.domain.model.Usuario
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.GestaoUsuarioFirebaseAuthTheme
 import java.time.LocalDate
 
 @Composable
 fun CadastrarUsuarioScreen(
-    irParaLogin: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CadastrarUsuarioViewModel = hiltViewModel()
 ) {
@@ -68,14 +69,20 @@ fun CadastrarUsuarioScreen(
     val scrollState = rememberScrollState()
 
     val context = LocalContext.current
+    val navController = LocalNavController.current
 
     val state by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(state) {
+    LaunchedEffect(state.sucesso, state.erro) {
         if (state.sucesso) {
             Toast.makeText(context, "Usuário cadastrado", Toast.LENGTH_SHORT).show()
-            irParaLogin()
+
+            navController.navigate(Screen.Login.route) {
+                // Remove a tela de cadastro da pilha para o usuário não voltar para ela
+                popUpTo(Screen.Cadastro.route) { inclusive = true }
+            }
         }
+
         if (state.erro != null) {
             Toast.makeText(context, state.erro, Toast.LENGTH_SHORT).show()
             viewModel.onEvent(MeuEvento.LimparErro)
@@ -235,7 +242,11 @@ fun CadastrarUsuarioScreen(
             Text(stringResource(R.string.info_ja_tem_conta))
 
             TextButton(
-                onClick = { irParaLogin() }
+                onClick = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Cadastro.route) { inclusive = true }
+                    }
+                }
             ) {
                 Text(text = stringResource(R.string.logar))
             }
@@ -247,6 +258,6 @@ fun CadastrarUsuarioScreen(
 @Composable
 fun GreetingPreview() {
     GestaoUsuarioFirebaseAuthTheme {
-        CadastrarUsuarioScreen({})
+        CadastrarUsuarioScreen()
     }
 }

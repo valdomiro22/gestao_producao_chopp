@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.configuracoes
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.configuracoes
 
 import android.Manifest
 import android.net.Uri
@@ -33,10 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.FileProvider
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -46,6 +45,8 @@ import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CampoImagemAlteravel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.DialogEditarNome
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.DialogExcluirConta
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 import com.santos.valdomiro.gestaoproducaochopp.utils.TAG
 import java.io.File
@@ -56,10 +57,6 @@ import java.util.Locale
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ConfiguracoesUsuarioScreen(
-    irParaHome: () -> Unit,
-    irParaLogin: () -> Unit,
-    irParaAlterarEmail: () -> Unit,
-    irParaAlterarSenha: () -> Unit,
     viewModel: ConfiguracoesUsuarioViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -73,6 +70,8 @@ fun ConfiguracoesUsuarioScreen(
     val deletarContaState by viewModel.deletarContaState.collectAsState()
     val recuperarUsuarioState by viewModel.recuperarUsuarioState.collectAsState()
     val atualizarNomeState by viewModel.alterarNomeState.collectAsState()
+    
+    val navController = LocalNavController.current
 
     val usuario = (recuperarUsuarioState as? UiState.Success<Usuario>)?.data
 
@@ -90,7 +89,10 @@ fun ConfiguracoesUsuarioScreen(
     LaunchedEffect(deletarContaState) {
         when (deletarContaState) {
             is UiState.Success -> {
-                irParaLogin()
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                    launchSingleTop = true
+                }
             }
             is UiState.Error -> {}
             else -> {}
@@ -206,7 +208,9 @@ fun ConfiguracoesUsuarioScreen(
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
         Button(
-            onClick = { irParaAlterarEmail() },
+            onClick = {
+                navController.navigate(Screen.AlterarEmail.route)
+            },
             modifier = Modifier
                 .fillMaxWidth(),
             contentPadding = PaddingValues(vertical = 12.dp)
@@ -217,7 +221,9 @@ fun ConfiguracoesUsuarioScreen(
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
         Button(
-            onClick = { irParaAlterarSenha() },
+            onClick = {
+                navController.navigate(Screen.AlterarSenha.route)
+            },
             modifier = Modifier
                 .fillMaxWidth(),
             contentPadding = PaddingValues(vertical = 12.dp)
@@ -253,12 +259,3 @@ fun ConfiguracoesUsuarioScreen(
         }
     }
 }
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ConfiguracoesUsuarioScreenPreview() {
-//    MaterialTheme {
-//        ConfiguracoesUsuarioScreen {}
-//    }
-//}

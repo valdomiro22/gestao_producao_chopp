@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.alterarsenha
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.alterarsenha
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

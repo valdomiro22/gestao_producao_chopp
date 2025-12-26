@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.login
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.login
 
 import androidx.lifecycle.ViewModel
 import com.santos.valdomiro.gestaoproducaochopp.domain.usecase.LogarUsuarioUseCase

@@ -1,11 +1,14 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.alteraremail
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.alterarsenha
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,26 +27,31 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.R
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
-import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomOutlinedTextField
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CustomOutlinedTextFieldSenha
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 
 @Composable
-fun AlterarEmailScreen(
-    irParaConfiguracoes: () -> Unit,
-    viewModel: AlterarEmailViewModel = hiltViewModel()
+fun AlterarSenhaScreen(
+    viewModel: AlterarSenhaViewModel = hiltViewModel()
 ) {
 
-    var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var novaSenha by remember { mutableStateOf("") }
+    var confirmeNovaSenha by remember { mutableStateOf("") }
+
     var mostrarSenha by remember { mutableStateOf(false) }
-    val context = LocalContext.current
+    var mostrarNovaSenha by remember { mutableStateOf(false) }
+    var mostrarConfirmarNovaSenha by remember { mutableStateOf(false) }
+
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val navController = LocalNavController.current
 
     LaunchedEffect(state) {
         when (state) {
             is UiState.Success -> {
-                irParaConfiguracoes()
+                navController.popBackStack()
             }
             is UiState.Error -> {
 
@@ -72,29 +80,49 @@ fun AlterarEmailScreen(
 
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
-        CustomOutlinedTextField(
-            value = email,
-            onValueChange = {email = it},
-            placeHolder = stringResource(R.string.placeholder_novo_email),
-            keyboardType = KeyboardType.Email
-        )
-
-        Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
-
         CustomOutlinedTextFieldSenha(
             value = senha,
             onValueChange = { senha = it },
             placeHolder = stringResource(R.string.placeholder_senha_atual),
             keyboardType = KeyboardType.Password,
             mostrarSenha = mostrarSenha,
-            onvisibilidadeChange = { mostrarSenha = !mostrarSenha }
+            onvisibilidadeChange = { mostrarSenha = !mostrarSenha },
+            icone = { Icon(Icons.Default.Lock, contentDescription = null) }
+        )
+
+        Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
+
+        CustomOutlinedTextFieldSenha(
+            value = novaSenha,
+            onValueChange = { novaSenha = it },
+            placeHolder = stringResource(R.string.placeholder_nova_senha),
+            keyboardType = KeyboardType.Password,
+            mostrarSenha = mostrarNovaSenha,
+            onvisibilidadeChange = { mostrarNovaSenha = !mostrarNovaSenha },
+            icone = { Icon(Icons.Default.Lock, contentDescription = null) }
+        )
+
+        Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
+
+        CustomOutlinedTextFieldSenha(
+            value = confirmeNovaSenha,
+            onValueChange = { confirmeNovaSenha = it },
+            placeHolder = stringResource(R.string.placeholder_confirmar_nova_senha),
+            keyboardType = KeyboardType.Password,
+            mostrarSenha = mostrarConfirmarNovaSenha,
+            onvisibilidadeChange = { mostrarConfirmarNovaSenha = !mostrarConfirmarNovaSenha },
+            icone = { Icon(Icons.Default.Lock, contentDescription = null) }
         )
 
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
         Button(
             onClick = {
-                viewModel.alterarEmail(email, senha)
+                viewModel.alterarSenha(
+                    senhaAtual = senha,
+                    novaSenha = novaSenha,
+                    confirmarNovaSenha = confirmeNovaSenha
+                )
                 viewModel.resetState()
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)

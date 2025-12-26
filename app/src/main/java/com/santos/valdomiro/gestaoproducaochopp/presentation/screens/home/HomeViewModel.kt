@@ -1,8 +1,8 @@
-package com.santos.valdomiro.gestaoproducaochopp.presentation.recuperarsenha
+package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.santos.valdomiro.gestaoproducaochopp.domain.usecase.RecuperarSenhaUseCase
+import com.santos.valdomiro.gestaoproducaochopp.domain.usecase.DeslogarUseCase
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecuperarSenhaViewModel @Inject constructor(
-    private val recuperarSenhaUseCase: RecuperarSenhaUseCase
+class HomeViewModel @Inject constructor(
+    private val deslogarUseCase: DeslogarUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Aguardando)
     val uiState = _uiState.asStateFlow()
 
-    fun recuperarSenha(email: String) {
+    fun deslogar() {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
 
-            val result = recuperarSenhaUseCase(email)
+            val result = deslogarUseCase()
 
             result.onSuccess { _uiState.value = UiState.Success(Unit) }
                 .onFailure { _uiState.value = UiState.Error(it.message ?: "Erro desconhecido") }
@@ -32,4 +32,5 @@ class RecuperarSenhaViewModel @Inject constructor(
     fun resetState() {
         _uiState.value = UiState.Aguardando
     }
+
 }

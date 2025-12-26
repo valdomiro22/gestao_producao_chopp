@@ -1,4 +1,4 @@
-package com.santos.valdomiro.gestaoproducaochopp
+package com.santos.valdomiro.gestaoproducaochopp.presentation.main
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santos.valdomiro.gestaoproducaochopp.domain.usecase.GetCurrentUserUseCase
-import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.AppRoutes
+import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ class MainActivityViewModel @Inject constructor(
     var isLoading = mutableStateOf(true)
         private set
 
-    var startDestination by mutableStateOf(AppRoutes.LOGIN)
+    var startDestination by mutableStateOf(Screen.Login.route)
         private set
 
     init {
@@ -35,12 +35,12 @@ class MainActivityViewModel @Inject constructor(
 
             result.onSuccess { usuario ->
                 startDestination = if (usuario != null) {
-                    AppRoutes.HOME
+                    Screen.Home.route
                 } else {
-                    AppRoutes.LOGIN
+                    Screen.Login.route
                 }
             }.onFailure {
-                startDestination = AppRoutes.LOGIN
+                startDestination = Screen.Login.route
             }
 
             isLoading.value = false

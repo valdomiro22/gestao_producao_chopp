@@ -32,7 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.santos.valdomiro.gestaoproducaochopp.R
 import com.santos.valdomiro.gestaoproducaochopp.domain.model.Usuario
-import com.santos.valdomiro.gestaoproducaochopp.presentation.configuracoes.ConfiguracoesUsuarioViewModel
+import com.santos.valdomiro.gestaoproducaochopp.presentation.screens.configuracoes.ConfiguracoesUsuarioViewModel
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
 import com.santos.valdomiro.gestaoproducaochopp.utils.TAG
 
