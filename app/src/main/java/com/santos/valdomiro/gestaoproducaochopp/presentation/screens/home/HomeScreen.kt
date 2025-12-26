@@ -55,9 +55,6 @@ fun HomeScreen(
     ) {
 
         Spacer(Modifier.height(50.dp))
-        Text("Home", fontSize = 32.sp)
-
-        Spacer(Modifier.height(100.dp))
 
         Button(
             onClick = { viewModel.deslogar() },

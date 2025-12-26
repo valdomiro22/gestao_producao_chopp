@@ -3,6 +3,7 @@ package com.santos.valdomiro.gestaoproducaochopp.presentation.main
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -46,12 +48,21 @@ fun MainAppScreen(
     // Lógica para esconder o Drawer no Login/Splash/Cadastro
     val showDrawer = drawerScreens.any { it.route == currentRoute }
 
+    // Dentro da sua MainAppScreen
+    LaunchedEffect(Unit) {
+        if (!showDrawer) {
+            drawerState.close()
+        }
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = showDrawer,
         drawerContent = {
-            if (showDrawer) {
-                ModalDrawerSheet {
+            ModalDrawerSheet(
+                modifier = Modifier.width(280.dp),
+            ) {
+                if (showDrawer) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         "Gestão de Produção",
@@ -97,7 +108,7 @@ fun MainAppScreen(
         ) { paddingValues ->
             AppNavigation(
                 navController = navController,
-                startDestination = startDestination, // Rota inicial corrigida
+                startDestination = startDestination,
                 modifier = Modifier.padding(paddingValues)
             )
         }
