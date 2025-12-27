@@ -3,12 +3,18 @@ package com.santos.valdomiro.gestaoproducaochopp.presentation.screens.home
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,7 +30,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
 import com.santos.valdomiro.gestaoproducaochopp.presentation.components.CardStatusProducao
@@ -32,6 +40,7 @@ import com.santos.valdomiro.gestaoproducaochopp.presentation.components.Selecion
 import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.LocalNavController
 import com.santos.valdomiro.gestaoproducaochopp.presentation.navigation.Screen
 import com.santos.valdomiro.gestaoproducaochopp.ui.theme.Dimens
+import com.santos.valdomiro.gestaoproducaochopp.utils.Turno
 
 @Composable
 fun HomeScreen(
@@ -40,6 +49,8 @@ fun HomeScreen(
 ) {
 
     val state by viewModel.uiState.collectAsState()
+    val turnoAtual by viewModel.turnoSelecionado.collectAsState()
+
     val context = LocalContext.current
     val navController = LocalNavController.current
 
@@ -61,13 +72,15 @@ fun HomeScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Dimens.EspacamentoG),
     ) {
 
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.EspacamentoG),
+                .fillMaxWidth(),
+//                .padding(Dimens.EspacamentoG),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
@@ -115,8 +128,8 @@ fun HomeScreen(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = Dimens.EspacamentoG),
+                .fillMaxWidth(),
+//                .padding(horizontal = Dimens.EspacamentoG),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             CardStatusProducao(
@@ -140,7 +153,35 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
 
-        SelecionarTurno()
+        SelecionarTurno(
+            turnoAtual = turnoAtual,
+            onTurnoChange = { novoTurno ->
+                viewModel.alterarTurno(novoTurno)
+            }
+        )
+
+        Spacer(modifier = Modifier.height(Dimens.EspacamentoG))
+
+        val listaDeProdutos = turnoAtual.horarios.values.toList()
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(5),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(170.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(listaDeProdutos) { produto ->
+                CardStatusProducao(
+                    backGround = Color(0xD80ED0A3),
+                    titulo = produto,
+                    quantidade = "100",
+                    altura = 70.dp,
+                    largura = Dp.Unspecified,
+                    conteudoTextSize = 18.sp
+                )
+            }
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package com.santos.valdomiro.gestaoproducaochopp.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
@@ -16,25 +17,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.santos.valdomiro.gestaoproducaochopp.utils.TAG
+import com.santos.valdomiro.gestaoproducaochopp.utils.Turno
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelecionarTurno() {
-    val opcoes = listOf("Turno A", "Turno B", "Turno C")
+fun SelecionarTurno(
+    turnoAtual: Turno,
+    onTurnoChange: (Turno) -> Unit
+) {
     var expandido by remember { mutableStateOf(false) }
-    var itemSelecionado by remember { mutableStateOf(opcoes[0]) }
+//    val opcoes = listOf("Turno A", "Turno B", "Turno C")
+//    var itemSelecionado by remember { mutableStateOf(opcoes[0]) }
 
     // O container principal que gerencia o estado do Menu
     ExposedDropdownMenuBox(
         expanded = expandido,
         onExpandedChange = { expandido = !expandido },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier = Modifier.fillMaxWidth()
     ) {
         // O campo de texto que serve como "botão"
         OutlinedTextField(
-            value = itemSelecionado,
+            value = turnoAtual.label,
             onValueChange = {},
             readOnly = true, // Impede que o usuário digite
             label = { Text("Selecione o Turno") },
@@ -56,11 +60,12 @@ fun SelecionarTurno() {
             expanded = expandido,
             onDismissRequest = { expandido = false }
         ) {
-            opcoes.forEach { opcao ->
+            Turno.entries.forEach { turno ->
                 DropdownMenuItem(
-                    text = { Text(opcao,) },
+                    text = { Text(turno.label) },
                     onClick = {
-                        itemSelecionado = opcao
+                        onTurnoChange(turno)
+                        Log.d(TAG, "SelecionarTurno: ${turno.label}")
                         expandido = false
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding

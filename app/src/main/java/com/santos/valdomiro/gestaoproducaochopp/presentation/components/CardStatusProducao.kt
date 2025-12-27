@@ -19,15 +19,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 
 @Composable
 fun CardStatusProducao(
     backGround: Color,
     titulo: String,
     quantidade: String,
-//    modifier: Modifier = Modifier, // Adicionado para permitir o weight
     largura: Dp = 110.dp,
-    altura: Dp = 120.dp
+    altura: Dp = 120.dp,
+    conteudoTextSize: TextUnit = 22.sp
 ) {
     val corComOpacidade = backGround.copy(alpha = 0.4f)
 
@@ -67,7 +68,7 @@ fun CardStatusProducao(
             Text(
                 text = quantidade,
                 color = Color.Black,
-                fontSize = 22.sp, // Número maior para facilitar leitura
+                fontSize = conteudoTextSize,
                 fontWeight = FontWeight.ExtraBold,
 //                color = backGround // Cor forte no texto para contraste
             )

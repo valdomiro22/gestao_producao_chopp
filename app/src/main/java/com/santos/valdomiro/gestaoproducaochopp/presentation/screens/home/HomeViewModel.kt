@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santos.valdomiro.gestaoproducaochopp.domain.usecase.DeslogarUseCase
 import com.santos.valdomiro.gestaoproducaochopp.presentation.common.UiState
+import com.santos.valdomiro.gestaoproducaochopp.utils.Turno
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,13 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Aguardando)
     val uiState = _uiState.asStateFlow()
+
+    private val _turnoSelecionado = MutableStateFlow(Turno.TurnoA)
+    val turnoSelecionado = _turnoSelecionado.asStateFlow()
+
+    fun alterarTurno(novoTurno: Turno) {
+        _turnoSelecionado.value = novoTurno
+    }
 
     fun deslogar() {
         viewModelScope.launch {
