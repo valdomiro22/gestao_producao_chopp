@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.ads.mobile.sdk)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.foundation)
     kapt("com.google.dagger:hilt-android-compiler:2.57.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
